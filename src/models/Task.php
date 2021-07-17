@@ -1,12 +1,12 @@
 <?php
-
+declare(strict_types=1);
 namespace Htmlacademy\Models;
 
 use Htmlacademy\Models\ActionCancel;
 use Htmlacademy\Models\ActionDeny;
 use Htmlacademy\Models\ActionDone;
 use Htmlacademy\Models\AbstractClass;
-use Htmlacademy\Models\ActionExecute;
+
 class Task
 {
     const STATUS_NEW = "new";
@@ -20,14 +20,13 @@ class Task
     const ACTION_CANCEL = "cancel";
     const ACTION_DENY = "deny";
 
-    public function actionArray () {
+    public function actionArray() {
         $array = [
             self::STATUS_NEW => [new ActionExecute(), new ActionCancel()],
             self::STATUS_EXECUTE => [new ActionDone(), new ActionDeny()],
         ];
         return $array;
     }
-
 
     private $executerId;
     private $customerId;
@@ -39,29 +38,28 @@ class Task
         $this->executerId = $executerId;
     }
 
-    public function returnMapStatuses()
-    {
-        return [
-            self::STATUS_NEW => "Новое",
-            self::STATUS_EXECUTE => "В работе",
-            self::STATUS_DONE => "Выполнено",
-            self::STATUS_FAIL => "Провалено",
-            self::STATUS_CANCEL => "Отменено",
-        ];
-    }
+    private $statusArray = [
+		self::STATUS_NEW => 'Новое',
+		self::STATUS_EXECUTE => 'В работе',
+		self::STATUS_DONE => 'Выполнено',
+		self::STATUS_FAIL => 'Провалено',
+		self::STATUS_CANCEL => 'Отменено'
+	];
 
-    public function returnMapActions()
-    {
-        return [
-            self::ACTION_EXECUTE => self::STATUS_EXECUTE,
-            self::ACTION_DONE => self::STATUS_DONE,
-            self::ACTION_CANCEL => self::STATUS_CANCEL,
-            self::ACTION_DENY => self::STATUS_FAIL,
-        ];
-    }
+    private $statusMap = [
+		self::ACTION_EXECUTE => self::STATUS_EXECUTE,
+		self::ACTION_DONE => self::STATUS_DONE,
+		self::ACTION_CANCEL => self::STATUS_CANCEL,
+		self::ACTION_DENY => self::STATUS_FAIL
+	];
 
-    public function getActions(string $status, int $idExecutor, int $idTaskmaker, int $idUser)
+     function getActions(string $status, int $idExecutor, int $idTaskmaker, int $idUser)
     {
+        $array = [
+            self::STATUS_NEW => [new ActionExecute(), new ActionCancel()],
+            self::STATUS_EXECUTE => [new ActionDone(), new ActionDeny()],
+        ];
+
         $statuses  = $this->actionArray();
 
         if (!array_key_exists($status, $statuses)){
@@ -100,4 +98,3 @@ class Task
         return $this->executerId;
     }
 }
-
