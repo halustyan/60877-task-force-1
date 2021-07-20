@@ -1,5 +1,5 @@
 <?php
-namespace TaskForce\CustomException;
+namespace Htmlacademy\Exceptions;
 class CustomExeption extends \Exception
 {
 }
