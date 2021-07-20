@@ -6,7 +6,7 @@ use Htmlacademy\Models\ActionDeny;
 use Htmlacademy\Models\ActionDone;
 use Htmlacademy\Models\ActionExecute;
 use Htmlacademy\Models\ActionCancel;
-use Htmlacademy\exceptions\CustomException;
+use Htmlacademy\Exceptions\CustomException;
 use Htmlacademy\Models\SqlCreation;
 require_once "vendor/autoload.php";
 
